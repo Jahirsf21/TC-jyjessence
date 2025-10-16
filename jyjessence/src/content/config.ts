@@ -7,6 +7,7 @@ const perfumes = defineCollection({
     gender: z.string(),
     img: z.string(),
     description: z.string(),
+    price: z.number(),
   }),
 
 })

@@ -2,42 +2,286 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 const perfumes = await getCollection('perfumes');
-
 ---
+<Layout>
+  <main>
+    <section class="business-face-section">
+      <img src="/jyjessence.png" alt="JYJ Essence Logo" class="logo-hero mb-6" />
+      <h1 class="text-5xl md:text-7xl font-extrabold title-fancy hero-title">JYJ Essence</h1>
+      <p class="hero-subtitle">Descubre la esencia de tu personalidad</p>
+    </section>
 
-<Layout title="Home">
-	<main>
-		<h1 class="text-center text-7xl font-extrabold">JYJ Essence
-			<span class="block">perfumes</span></h1>
+    {perfumes.map((perfume, indice) => {
+      const esPar = indice % 2 === 0;
+			const {data} = perfume;
+			const { title,category,description,price,img } = data;
+      return (
+        <section class={`py-12 md:py-20 ${esPar ? 'section-even' : 'section-odd'}`}>
+          <div class="container mx-auto px-4 perfume-grid">
+            {esPar ? (
+              <>
+                <div class="img-col">
+                  <img src={img} alt={title} class="w-full h-auto object-cover rounded-lg shadow-lg" style="max-height: 400px;" />
+                </div>
+                <div class="text-content">
+                  <h2 class="title-fancy text-3xl md:text-5xl mb-2">{title}</h2>
+                  <p class="subtitle-text text-left mx-0">{description}</p>
+                  <div class="perfume-meta mt-2">
+                    <span class="perfume-category">{category}</span>
+                    <span class="perfume-price">${price.toLocaleString('en-US', {maximumFractionDigits: 2})}</span>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div class="text-content">
+                  <h2 class="title-fancy text-3xl md:text-5xl mb-2">{title}</h2>
+                  <p class="subtitle-text text-left mx-0">{description}</p>
+                  <div class="perfume-meta mt-2">
+                    <span class="perfume-category">{category}</span>
+                    <span class="perfume-price">${price.toLocaleString('en-US', {maximumFractionDigits: 2})}</span>
+                  </div>
+                </div>
+                <div class="img-col">
+                  <img src={img} alt={title} class="w-full h-auto object-cover rounded-lg shadow-lg" style="max-height: 400px;" />
+                </div>
+              </>
+            )}
+          </div>
+        </section>
+      );
+    })}
 
-	</main>
-	<section aria-label = "Perfumes recomendados para salir a la calle">
-		<div class="px-4 mx-auto max-w-screen-xl">
-			<div class ="grid gap-6 md:grid-cols-2">
-				{
-					perfumes.map(perfume => {
-						const { slug, data} = perfume;
-						const { title,gender,description, img } = data;
-						return (
-							<article class="flex">
-								<a href={`/perfume/${slug}`} class=" mb-2 xl:mb-0 transition hover:scale-110">
-									<img src={`/${img}`} alt={title} class="w-full rounded-lg"/>
-
-								</a>
-								<div class="flex flex-col justify-center">
-									<h2 class="mb-2 text-2xl font-bold leading-tight text-white">
-										{title}
-									</h2>
-									<p class="mb-4 text-gray-300">{description}</p>
-									<span class="text-xs">Genero {gender}</span>
-									
-								</div>
-							</article>
-						)
-
-					})
-				}
-			</div>
-		</div>
-	</section>
+    <footer class="footer">
+      <div class="container mx-auto px-4 footer-content">
+        <p>&copy; 2025 JYJ Essence.</p>
+      </div>
+    </footer>
+  </main>
 </Layout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
+  
+  :root {
+    --color-purple: #6366f1;
+    --color-blue: #0ea5e9;
+    --color-teal: #14b8a6;
+    --color-green: #84cc16;
+    --color-yellow: #fbbf24;
+    --color-orange: #f97316;
+    --color-red: #ef4444;
+    --color-dark: #1e293b;
+    --color-light: #f8fafc;
+    --color-text: #334155;
+  }
+
+  body {
+    background: linear-gradient(135deg, 
+      #e0f2fe 0%, 
+      #ccfbf1 25%, 
+      #fef3c7 50%, 
+      #fed7aa 75%, 
+      #fecaca 100%);
+    background-attachment: fixed;
+    color: var(--color-text);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .title-fancy {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+  }
+
+  .subtitle-text {
+    font-size: 1rem;
+    color: #475569;
+    max-width: 400px;
+    margin: 1rem auto;
+    text-align: justify;
+    line-height: 1.8;
+  }
+
+  .business-face-section {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-blue) 50%, var(--color-teal) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .business-face-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .logo-hero {
+    width: 260px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-title {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 0px 2px rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 6rem;
+    }
+    .logo-hero {
+      width: 400px;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 0px 2px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      font-size: 1.5rem;
+    }
+  }
+
+  .section-even {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .section-odd {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .perfume-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 2rem;
+  }
+
+  .img-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .perfume-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .img-col {
+      align-items: start;
+      justify-content: center;
+    }
+    .text-content {
+      text-align: left;
+      padding: 3rem;
+    }
+  }
+
+  .text-content {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .perfume-meta {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #6366f1;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+  }
+  .perfume-meta span {
+    text-align: left;
+  }
+  .perfume-category {
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 0.2em 0.7em;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .perfume-price {
+    background: #fef3c7;
+    color: #b45309;
+    padding: 0.2em 0.7em;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .footer {
+    background: linear-gradient(135deg, var(--color-dark) 0%, #0f172a 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-top: 0;
+  }
+
+  .footer-content {
+    text-align: center;
+  }
+
+  .footer p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
