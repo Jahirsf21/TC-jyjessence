@@ -8,9 +8,15 @@ const perfumes = await getCollection('perfumes');
   <main>
     <SearchComponent />
     <section class="business-face-section">
-      <img src="/jyjessence.png" alt="JYJ Essence Logo" class="logo-hero mb-6" />
-      <h1 class="text-5xl md:text-7xl font-extrabold title-fancy hero-title">JYJ Essence</h1>
-      <p class="hero-subtitle">Descubre la esencia de tu personalidad</p>
+      <a href="https://www.instagram.com/jyj.essence/" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
+        <img src="/jyjessence.png" alt="JYJ Essence Logo" class="logo-hero mb-6" />
+      </a>
+      <a href="https://www.instagram.com/jyj.essence/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+        <h1 class="text-5xl md:text-7xl font-extrabold title-fancy hero-title">JYJ Essence</h1>
+      </a>
+      <a href="https://www.instagram.com/jyj.essence/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+        <p class="hero-subtitle">Descubre la esencia de tu personalidad</p>
+      </a>
     </section>
 
     {perfumes.map((perfume, indice) => {
@@ -128,6 +134,13 @@ const perfumes = await getCollection('perfumes');
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
     position: relative;
     z-index: 1;
+    transition: box-shadow 0.35s cubic-bezier(0.4,0,0.2,1), filter 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    cursor: default;
+  }
+
+  .logo-hero:hover {
+    filter: drop-shadow(0 16px 40px rgba(99,102,241,0.18));
+    transform: translateY(-6px) scale(1.025);
   }
 
   .hero-title {
@@ -140,6 +153,13 @@ const perfumes = await getCollection('perfumes');
     letter-spacing: 2px;
     position: relative;
     z-index: 1;
+    cursor: default;
+    transition: filter 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .hero-title:hover {
+    filter: drop-shadow(0 16px 40px rgba(99,102,241,0.18));
+    transform: translateY(-6px) scale(1.025);
   }
 
   @media (min-width: 768px) {
@@ -160,6 +180,13 @@ const perfumes = await getCollection('perfumes');
     text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 0px 2px rgba(0,0,0,0.5);
     position: relative;
     z-index: 1;
+    transition: filter 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    cursor: default;
+  }
+
+  .hero-subtitle:hover {
+    filter: drop-shadow(0 16px 40px rgba(99,102,241,0.18));
+    transform: translateY(-6px) scale(1.025);
   }
 
   @media (min-width: 768px) {
@@ -168,20 +195,19 @@ const perfumes = await getCollection('perfumes');
     }
   }
 
-  .section-even {
+  .section-even, .section-odd {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     margin: 50px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.35s cubic-bezier(0.4,0,0.2,1);
   }
 
-  .section-odd {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    margin: 50px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  .section-even:hover, .section-odd:hover {
+    box-shadow: 0 12px 40px 0 rgba(30,41,59,0.18), 0 2px 8px 0 rgba(99,102,241,0.10);
+    transform: translateY(-6px) scale(1.012);
+    z-index: 2;
   }
 
   .perfume-grid {
