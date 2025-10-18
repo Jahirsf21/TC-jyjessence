@@ -312,4 +312,55 @@ const perfumes = await getCollection('perfumes');
   html {
     scroll-behavior: smooth;
   }
+
+
+  @media (max-width: 480px) {
+    .business-face-section {
+      padding: 1rem;
+      min-height: 40vh;
+    }
+    .logo-hero {
+      width: 150px;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-size: 2rem;
+      margin-top: 0.5rem;
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+    .section-even, .section-odd {
+      margin: 10px;
+      padding: 0.5rem;
+    }
+    .text-content {
+      padding: 1rem;
+    }
+    .perfume-meta {
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 375px) {
+    .logo-hero {
+      width: 110px;
+    }
+    .hero-title {
+      font-size: 1.3rem;
+    }
+    .hero-subtitle {
+      font-size: 0.9rem;
+    }
+    .text-content {
+      padding: 0.5rem;
+    }
+    .section-even, .section-odd {
+      margin: 2px;
+      padding: 0.2rem;
+    }
+  }
 </style>
