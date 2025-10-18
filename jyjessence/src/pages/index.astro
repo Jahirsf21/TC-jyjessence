@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SearchComponent from '../components/search-component.astro';
 import { getCollection } from 'astro:content';
 const perfumes = await getCollection('perfumes');
 ---
 <Layout>
   <main>
+    <SearchComponent />
     <section class="business-face-section">
       <img src="/jyjessence.png" alt="JYJ Essence Logo" class="logo-hero mb-6" />
       <h1 class="text-5xl md:text-7xl font-extrabold title-fancy hero-title">JYJ Essence</h1>
@@ -13,10 +15,10 @@ const perfumes = await getCollection('perfumes');
 
     {perfumes.map((perfume, indice) => {
       const esPar = indice % 2 === 0;
-			const {data} = perfume;
-			const { title,category,description,price,img } = data;
+      const { data } = perfume;
+      const { title, category, gender, description, price, img } = data;
       return (
-        <section class={`py-12 md:py-20 ${esPar ? 'section-even' : 'section-odd'}`}>
+        <section class={`py-12 md:py-20 ${esPar ? 'section-even' : 'section-odd'}`} data-gender={gender}> 
           <div class="container mx-auto px-4 perfume-grid">
             {esPar ? (
               <>
@@ -28,7 +30,8 @@ const perfumes = await getCollection('perfumes');
                   <p class="subtitle-text text-left mx-0">{description}</p>
                   <div class="perfume-meta mt-2">
                     <span class="perfume-category">{category}</span>
-                    <span class="perfume-price">${price.toLocaleString('en-US', {maximumFractionDigits: 2})}</span>
+                    <span class="perfume-gender">{gender}</span>
+                    <span class="perfume-price">₡{price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                   </div>
                 </div>
               </>
@@ -39,7 +42,8 @@ const perfumes = await getCollection('perfumes');
                   <p class="subtitle-text text-left mx-0">{description}</p>
                   <div class="perfume-meta mt-2">
                     <span class="perfume-category">{category}</span>
-                    <span class="perfume-price">${price.toLocaleString('en-US', {maximumFractionDigits: 2})}</span>
+                    <span class="perfume-gender">{gender}</span>
+                    <span class="perfume-price">₡{price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                   </div>
                 </div>
                 <div class="img-col">
@@ -63,26 +67,14 @@ const perfumes = await getCollection('perfumes');
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
   
-  :root {
-    --color-purple: #6366f1;
-    --color-blue: #0ea5e9;
-    --color-teal: #14b8a6;
-    --color-green: #84cc16;
-    --color-yellow: #fbbf24;
-    --color-orange: #f97316;
-    --color-red: #ef4444;
-    --color-dark: #1e293b;
-    --color-light: #f8fafc;
-    --color-text: #334155;
-  }
+:root {
+  --color-dark2: #1a1a2e;
+  background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark2) 100%);
+  background-attachment: fixed;
+}
 
   body {
-    background: linear-gradient(135deg, 
-      #e0f2fe 0%, 
-      #ccfbf1 25%, 
-      #fef3c7 50%, 
-      #fed7aa 75%, 
-      #fecaca 100%);
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark2) 100%);
     background-attachment: fixed;
     color: var(--color-text);
     font-family: 'Montserrat', sans-serif;
@@ -95,7 +87,7 @@ const perfumes = await getCollection('perfumes');
 
   .subtitle-text {
     font-size: 1rem;
-    color: #475569;
+    color: #374252;
     max-width: 400px;
     margin: 1rem auto;
     text-align: justify;
@@ -180,7 +172,7 @@ const perfumes = await getCollection('perfumes');
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     border-radius: 15px;
-    margin: 20px;
+    margin: 50px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 
@@ -188,7 +180,7 @@ const perfumes = await getCollection('perfumes');
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     border-radius: 15px;
-    margin: 20px;
+    margin: 50px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 
@@ -240,9 +232,18 @@ const perfumes = await getCollection('perfumes');
   .perfume-meta span {
     text-align: left;
   }
+  .perfume-gender {
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark2) 100%);
+    color: #ffffff;
+    padding: 0.2em 0.7em;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
   .perfume-category {
-    background: #e0e7ff;
-    color: #3730a3;
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark2) 100%);
+    color: #ffffff;
     padding: 0.2em 0.7em;
     border-radius: 8px;
     font-size: 0.95em;
@@ -250,8 +251,8 @@ const perfumes = await getCollection('perfumes');
     letter-spacing: 1px;
   }
   .perfume-price {
-    background: #fef3c7;
-    color: #b45309;
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark2) 100%);
+    color: #ffffff;
     padding: 0.2em 0.7em;
     border-radius: 8px;
     font-size: 0.95em;
@@ -265,7 +266,8 @@ const perfumes = await getCollection('perfumes');
   }
 
   .footer {
-    background: linear-gradient(135deg, var(--color-dark) 0%, #0f172a 100%);
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark2) 100%);
+    background-attachment: fixed;
     color: white;
     padding: 3rem 0;
     margin-top: 0;
